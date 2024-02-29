@@ -3,16 +3,25 @@ h1{
    text-align: center;
    color: rgb(255, 85, 0);
 }
+body{
+   align-items: center;
+}
 .MusicPlayer-container{
    display: flex;
+   align-items: center;
+   margin-left: 37%;
+   flex-direction: column;
+   padding: 20px;
+
+ 
    flex-direction: column;
    border:none;
    
-   padding: 15px;
+ 
    width: 300px;
    height: 360px;
-   margin-left: 37%;
-   align-items: center;
+  
+  
    background-color: white;
    border-radius: 29px;
    background: white;
@@ -41,11 +50,41 @@ height: 210px;
 .back-button{
    font-size: 30px;
    margin: 5px;
+   cursor: pointer;
    
 }
+
+
 input[type="range"] {
-   background-color: #27ae60;
+   width: 80%;
+   margin-top: 10px;
+   /* Set the color of the range input to black */
+   color: black;
  }
+ 
+ /* Customize the appearance of the track */
+ input[type="range"]::-webkit-slider-runnable-track {
+   width: 80%;
+   height: 4px;
+   cursor: pointer;
+   background: black; /* Set the background color of the track to black */
+   border-radius: 2px;
+   border: 0;
+ }
+ 
+ /* Customize the appearance of the thumb (slider handle) */
+ input[type="range"]::-webkit-slider-thumb {
+   border: 1px solid black; /* Set the border color of the thumb to black */
+   height: 16px;
+   width: 16px;
+   border-radius: 50%;
+   background: white; /* Set the background color of the thumb to white */
+   cursor: pointer;
+   -webkit-appearance: none;
+   margin-top: -6px;
+ }
+ 
+
 
 
 

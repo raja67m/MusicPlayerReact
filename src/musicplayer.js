@@ -10,36 +10,87 @@ class MusicPlayer extends React.Component{
 
    constructor(props){
       super(props);
+      this.audioRef = React.createRef();
       this.state={
          isPlaying:false,
-
-    
-
-      }
+        currentTime:0,
+        duration:0
+    };
    }
 
-   render(){
+//update the current Date & time use reactlifecycle
 
+componentDidMount(){
+   const audio=this.audioRef.current;
+   audio.addEventListener("timeupdate",this.updateTime);
+   audio.addEventListener("loadedmetadata",this.setDuration);
+}
+
+//remove the music lead memorys
+
+componentWillUnmount(){
+   const audio=this.audioRef.current;
+   audio.removeEventListener("timeupdate",this.updateTime);
+   audio.removeEventListener("loadedmetadata",this.setDuration);
+}
+
+updateTime=()=>{
+   const audio=this.audioRef.current;
+   this.setState({currentTime:audio.currentTime})
+}
+
+//audio paly funciton
+togglePlay = () => {
+   const audio = this.audioRef.current;
+   if (audio.paused) {
+     audio.play();
+     this.setState({ isPlaying: true });
+   } else {
+     audio.pause();
+     this.setState({ isPlaying: false });
+   }
+ };
+
+ setDuration = () => {
+   const audio = this.audioRef.current;
+   this.setState({ duration: audio.duration });
+ };
+
+ handleSeek = (e) => {
+   const audio = this.audioRef.current;
+   audio.currentTime = e.target.value;
+   this.setState({ currentTime: e.target.value });
+ } 
+render(){
+   const { currentTime, duration, isPlaying } = this.state;
       return<>
       <h1>music palyer</h1>
+      
+
+     
       <div className="MusicPlayer-container">
 
      <img src={Leo} alt="Not Available"/>
-     <p> Move: Leo <br></br>
-       <b>
+     <p> Move: <b> Leo </b> <br></br>
+       
        Song : Naa ready
-         </b> 
+          
      </p>
    
-     <input type="range"/>
+     <input type="range"
+            value={currentTime}
+            max={duration}
+            onChange={this.handleSeek}/>
 
 <div className="Music-components">
 
   <BiSkipPrevious className="back-button"/>
-  {this.state.isPlaying?(
- <AiFillPauseCircle  className="back-button" />
+  {isPlaying?(
+ <AiFillPauseCircle  className="back-button" 
+ onClick={this.togglePlay}/>
   ):(
-<AiFillPlayCircle  className="back-button"/>
+<AiFillPlayCircle  className="back-button"
+onClick={this.togglePlay}/>
   )}
 
 
@@ -47,7 +98,7 @@ class MusicPlayer extends React.Component{
 
   <BiSkipNext  className="back-button"/>
 
-
+<audio ref={this.audioRef} src={NaaReady}></audio>
 
 
 
@@ -56,6 +107,7 @@ class MusicPlayer extends React.Component{
         
 
       </div>
+      
       
       </>
    }
